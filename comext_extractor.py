@@ -116,9 +116,9 @@ class ComextExtractor:
             pandas DataFrame
         """
         try:
-            # REST API format: {"value": {...}, "dimension": {...}, "status": "..."}
+            # REST API format: {"value": {...}, "dimension": {...}, "id": [...], "status": "..."}
             if 'value' not in json_data:
-                raise ValueError("Invalid REST API response format")
+                raise ValueError("Invalid REST API response format: missing 'value'")
             
             values = json_data['value']
             dimensions = json_data.get('dimension', {})
@@ -128,21 +128,37 @@ class ComextExtractor:
             rows = []
             for key, value in values.items():
                 # Parse key (e.g., "0:0:0:0:0" represents dimension indices)
-                indices = [int(idx) for idx in key.split(':')]
+                try:
+                    indices = [int(idx) for idx in key.split(':')]
+                except ValueError:
+                    continue
                 
                 row = {}
                 # Map indices to dimension values
                 for i, dim_id in enumerate(ids):
                     if i < len(indices) and dim_id in dimensions:
-                        dim_values = dimensions[dim_id].get('category', {}).get('index', {})
-                        # Reverse lookup to get label
-                        for label, idx in dim_values.items():
+                        dim_info = dimensions[dim_id]
+                        # Get category index mapping
+                        category_index = dim_info.get('category', {}).get('index', {})
+                        # Get label mapping
+                        category_label = dim_info.get('category', {}).get('label', {})
+                        
+                        # Find the label for this index
+                        dim_value = None
+                        for label, idx in category_index.items():
                             if idx == indices[i]:
-                                row[dim_id.upper()] = label
+                                dim_value = label
                                 break
-                        else:
-                            # Fallback: use index directly
-                            row[dim_id.upper()] = str(indices[i])
+                        
+                        # If no label found, try to get from category_label
+                        if dim_value is None and str(indices[i]) in category_label:
+                            dim_value = category_label[str(indices[i])]
+                        
+                        # Fallback: use index as string
+                        if dim_value is None:
+                            dim_value = str(indices[i])
+                        
+                        row[dim_id.upper()] = dim_value
                 
                 row['OBS_VALUE'] = value
                 rows.append(row)
@@ -150,7 +166,8 @@ class ComextExtractor:
             if not rows:
                 raise ValueError("No data found in response")
             
-            return pd.DataFrame(rows)
+            df = pd.DataFrame(rows)
+            return df
             
         except Exception as e:
             raise ValueError(f"Failed to parse REST API response: {str(e)}")
