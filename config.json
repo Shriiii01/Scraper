@@ -1,0 +1,15 @@
+{
+  "dataset_code": "DS-057009",
+  "filters": {
+    "freq": "A",
+    "time": "2020",
+    "geo": "EU27_2020",
+    "partnerGeo": "CN",
+    "product": "TOTAL",
+    "flow": "1"
+  },
+  "output_path": "comext_data.csv",
+  "output_format": "csv",
+  "timeout": 30
+}
+
