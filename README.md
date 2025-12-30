@@ -40,7 +40,7 @@ python comext_extractor.py
 ### Using Command-Line Arguments
 
 ```bash
-python comext_extractor.py --dataset DS-057009 --output my_data.csv --format csv
+python comext_extractor.py --dataset ext_lt_intratrd --output my_data.csv --format csv
 ```
 
 ### Using Configuration File
@@ -60,14 +60,10 @@ The configuration file allows you to set extraction parameters:
 
 ```json
 {
-  "dataset_code": "DS-057009",
+  "dataset_code": "ext_lt_intratrd",
   "filters": {
-    "freq": "A",
-    "time": "2020",
     "geo": "EU27_2020",
-    "partnerGeo": "CN",
-    "product": "TOTAL",
-    "flow": "1"
+    "time": "2020"
   },
   "output_path": "comext_data.csv",
   "output_format": "csv",
@@ -79,11 +75,9 @@ The configuration file allows you to set extraction parameters:
 
 #### Dataset Code
 - **dataset_code**: The Eurostat dataset identifier
-  - Common codes:
-    - `DS-057009`: Detailed trade by partner and product
-    - `DS-057010`: Trade by partner country
-    - `DS-057011`: Trade by product
-  - Find more at: https://ec.europa.eu/eurostat/web/international-trade-in-goods/data/database
+  - Example working code: `ext_lt_intratrd` (Intra and Extra-EU trade)
+  - Note: Dataset codes vary by dataset type and availability
+  - Find available codes at: https://ec.europa.eu/eurostat/web/international-trade-in-goods/data/database
 
 #### Filters
 
@@ -129,54 +123,42 @@ The configuration file allows you to set extraction parameters:
 
 ## Usage Examples
 
-### Example 1: Annual EU-China Trade Data
+### Example 1: EU Trade Data (2020)
 
 ```json
 {
-  "dataset_code": "DS-057009",
+  "dataset_code": "ext_lt_intratrd",
   "filters": {
-    "freq": "A",
-    "time": "2020",
     "geo": "EU27_2020",
-    "partnerGeo": "CN",
-    "product": "TOTAL",
-    "flow": "1"
+    "time": "2020"
   },
-  "output_path": "eu_china_imports_2020.csv"
+  "output_path": "eu_trade_2020.csv"
 }
 ```
 
-### Example 2: Monthly German Exports to USA
+### Example 2: Germany Trade Data (2021)
 
 ```json
 {
-  "dataset_code": "DS-057009",
+  "dataset_code": "ext_lt_intratrd",
   "filters": {
-    "freq": "M",
-    "time": "2023-01",
     "geo": "DE",
-    "partnerGeo": "US",
-    "product": "TOTAL",
-    "flow": "2"
+    "time": "2021"
   },
-  "output_path": "germany_us_exports_jan2023.csv"
+  "output_path": "germany_trade_2021.csv"
 }
 ```
 
-### Example 3: Quarterly Trade by Product Category
+### Example 3: France Trade Data (2022)
 
 ```json
 {
-  "dataset_code": "DS-057009",
+  "dataset_code": "ext_lt_intratrd",
   "filters": {
-    "freq": "Q",
-    "time": "2023-Q1",
     "geo": "FR",
-    "partnerGeo": "TOTAL",
-    "product": "01",
-    "flow": "1"
+    "time": "2022"
   },
-  "output_path": "france_imports_q1_2023.csv"
+  "output_path": "france_trade_2022.csv"
 }
 ```
 
@@ -206,16 +188,12 @@ extractor = ComextExtractor()
 
 # Define filters
 filters = {
-    'freq': 'A',
-    'time': '2020',
     'geo': 'EU27_2020',
-    'partnerGeo': 'CN',
-    'product': 'TOTAL',
-    'flow': '1'
+    'time': '2020'
 }
 
 # Fetch data
-df = extractor.fetch_data('DS-057009', filters=filters)
+df = extractor.fetch_data('ext_lt_intratrd', filters=filters)
 
 # Save to file
 extractor.save_data(df, 'output.csv', format='csv')
