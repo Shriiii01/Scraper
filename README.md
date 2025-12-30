@@ -2,20 +2,20 @@
 
 **Fully working Python tool** for extracting and automating data downloads from the Eurostat Comext (International Trade in Goods) database.
 
-## ✅ Client Requirements Met
+## Client Requirements Met
 
-- ✅ **Fully working Python script(s)** - `comext_extractor.py` with complete functionality
-- ✅ **Clear documentation** - This README with step-by-step instructions
-- ✅ **Sample extracted dataset** - `sample_output.csv` for verification
+- **Fully working Python script(s)** - `comext_extractor.py` with complete functionality
+- **Clear documentation** - This README with step-by-step instructions
+- **Sample extracted dataset** - `sample_output.csv` for verification
 
 ## Features
 
-- ✅ Automated data extraction from Eurostat Comext API
-- ✅ Flexible filtering options (time period, countries, products, trade flows)
-- ✅ Multiple output formats (CSV, Excel, JSON, Parquet)
-- ✅ Configuration file support for easy parameter modification
-- ✅ Command-line interface
-- ✅ Error handling and validation
+- Automated data extraction from Eurostat Comext API
+- Flexible filtering options (time period, countries, products, trade flows)
+- Multiple output formats (CSV, Excel, JSON, Parquet)
+- Configuration file support for easy parameter modification
+- Command-line interface
+- Error handling and validation
 
 ## Installation
 
