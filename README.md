@@ -274,4 +274,3 @@ This tool is provided as-is for data extraction purposes. Please refer to Eurost
 ## Sample Dataset
 
 After running the script, check the `sample_output.csv` file for an example of extracted data.
-
